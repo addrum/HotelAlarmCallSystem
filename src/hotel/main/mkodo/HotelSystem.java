@@ -25,8 +25,8 @@ public class HotelSystem implements Runnable {
 		callLog = new LinkedHashMap<Integer, String>();
 		this.thread = new Thread(this);
 		this.thread.start();
-		setAlarmTime(4, "16:20:01");
-		setAlarmTime(5, "16:25:01");
+		setAlarmTime(4, "16:24:01");
+		setAlarmTime(5, "16:29:01");
 	}
 
 	@Override
@@ -35,21 +35,19 @@ public class HotelSystem implements Runnable {
 			currentTime = getCurrentTime();
 			if (callLog.containsValue(currentTime)) {
 				for (Entry<Integer, String> entry : callLog.entrySet()) {
-		            if (entry.getValue().equals(currentTime)) {
-		                sendAlarmCall(entry.getKey());
-		            }
-		        }
+					if (entry.getValue().equals(currentTime)) {
+						sendAlarmCall(entry.getKey());
+						try {
+							Thread.sleep(300000);
+							System.out.println("Thread is sleeping");
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						System.out.println("Thread is awake");
+					}
+				}
 			}
-			
-			// rest for 5 minutes to conserve memory
-			try {
-				Thread.sleep(300000);
-				System.out.println("Thread is sleeping");
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			System.out.println("Thread is awake");
 		}
 	}
 
