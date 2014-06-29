@@ -1,11 +1,8 @@
 package hotel.main.mkodo;
 
-import java.awt.TextArea;
-import javax.swing.JTextArea;
-
 public class MainFrame extends javax.swing.JFrame {
 
-    private HotelSystem hotelSystem;
+    private final HotelSystem hotelSystem;
 
     /**
      * Creates new form MainFrame
@@ -14,18 +11,6 @@ public class MainFrame extends javax.swing.JFrame {
         initComponents();
         hotelSystem = new HotelSystem(viewPanel);
         hotelSystem.start();
-    }
-
-    public JTextArea getRoomNumberTextArea() {
-        return roomNumberTextArea;
-    }
-
-    public JTextArea getTimeTextArea() {
-        return timeTextArea;
-    }
-
-    public JTextArea getViewPanel() {
-        return viewPanel;
     }
 
     /**
@@ -79,8 +64,10 @@ public class MainFrame extends javax.swing.JFrame {
 
         viewPanel.setEditable(false);
         viewPanel.setColumns(20);
+        viewPanel.setLineWrap(true);
         viewPanel.setRows(5);
         viewPanel.setAutoscrolls(false);
+        viewPanel.setRequestFocusEnabled(false);
         jScrollPane1.setViewportView(viewPanel);
 
         roomNumberTextArea.setColumns(20);
@@ -153,14 +140,14 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void setAlarmButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_setAlarmButtonActionPerformed
         if (roomNumberTextArea.getText().equals("")) {
-            viewPanel.setText("Please enter a room number.");
+            viewPanel.append("Please enter a room number.\n");
         } else if (timeTextArea.getText().equals("")) {
-            viewPanel.setText("Please enter an alarm time.");
+            viewPanel.append("Please enter an alarm time.\n");
         } else {
             int roomNumber = Integer.parseInt(roomNumberTextArea.getText());
             String time = timeTextArea.getText();
             hotelSystem.setAlarmTime(roomNumber, time);
-            viewPanel.setText("Alarm set for room number: " + roomNumber + " at: " + time);
+            viewPanel.append("Alarm set for room number: " + roomNumber + " at: " + time + "\n");
             timeTextArea.setText("");
             roomNumberTextArea.setText("");
         }
@@ -171,12 +158,12 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_nextAlarmCallButtonMouseClicked
 
     private void nextAlarmCallButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nextAlarmCallButtonActionPerformed
-        viewPanel.setText(hotelSystem.getNextCallRequest());
+        viewPanel.append(hotelSystem.getNextCallRequest()+"\n");
     }//GEN-LAST:event_nextAlarmCallButtonActionPerformed
 
     private void cancelAlarmButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelAlarmButtonActionPerformed
         if (roomNumberTextArea.getText().equals("")) {
-            viewPanel.setText("Please enter the room number in below.");
+            viewPanel.append("Please enter the room number in below.\n");
         } else {
             hotelSystem.cancelAlarm(Integer.parseInt(roomNumberTextArea.getText()));
             roomNumberTextArea.setText("");

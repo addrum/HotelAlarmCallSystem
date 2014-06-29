@@ -10,6 +10,7 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.NoSuchElementException;
 import java.util.Set;
 import javax.swing.JFrame;
 import javax.swing.JTextArea;
@@ -18,7 +19,7 @@ public class HotelSystem extends Thread {
 
     private HashMap<Integer, String> callLog;
     private SimpleDateFormat timeFormat = new SimpleDateFormat("kk:mm:ss");
-    private final String wakeUpMessage = "This is your automatic wake up call for room number(s): ";
+    private final String wakeUpMessage = "This is your automatic wake up call for room number: ";
     private String nextCall;
     private Thread thread;
     private String currentTime;
@@ -34,16 +35,11 @@ public class HotelSystem extends Thread {
         while (true) {
             currentTime = getCurrentTime();
             if (callLog.containsValue(currentTime)) {
+                StringBuilder numbers = new StringBuilder();
                 for (Entry<Integer, String> entry : callLog.entrySet()) {
-                    String numbers = "";
                     if (entry.getValue().equals(currentTime)) {
-                        if (numbers.equals("")) {
-                            numbers += " + " + entry.getKey();
-                        } else {
-                            numbers = "" + entry.getKey();
-                        }
-                        sendAlarmCall(numbers);
-                        //sendAlarmCall(entry.getKey());
+                        System.out.println(entry.getKey());
+                        sendAlarmCall(entry.getKey());
                     }
                 }
             }
@@ -65,22 +61,18 @@ public class HotelSystem extends Thread {
     }
 
     // sends a generic alarm call message followed by the room number
-    private void sendAlarmCall(String numbers) {
-        viewPanel.setText(wakeUpMessage + numbers);
-        //callLog.remove(roomNumber);
+    private void sendAlarmCall(int numbers) {
+        viewPanel.append(wakeUpMessage + numbers + "\n");
     }
 
     // uses the iterator to get to first key:value pair in the hashmap
     public String getNextCallRequest() {
-        Iterator it = callLog.entrySet().iterator();
-        if (it.hasNext()) {
-            Map.Entry pairs = (Map.Entry) it.next();
-            nextCall = "Room Number: " + pairs.getKey() + " - Time: " + pairs.getValue();
-            it.remove(); // avoids a ConcurrentModificationException
-            return nextCall;
-        } else {
-            nextCall = "null";
-            return nextCall;
+        try {
+            Object key = callLog.keySet().iterator().next();
+            Object value = callLog.get(key);
+            return "Next wake up call for room number: " + key + " at: " + value;
+        } catch (NoSuchElementException e) {
+            return null;
         }
     }
 
@@ -96,16 +88,16 @@ public class HotelSystem extends Thread {
             String alarmTime = timeFormat.format(alarmDate);
             callLog.put(roomNumber, alarmTime);
         } catch (ParseException e) {
-            viewPanel.setText("Please ensure you seperate the time with colons eg 07:30:00");
+            viewPanel.append("Please ensure you seperate the time with colons eg 07:30:00\n");
         }
     }
 
     public void cancelAlarm(int roomNumber) {
         if (callLog.containsKey(roomNumber)) {
             callLog.remove(roomNumber);
-            viewPanel.setText("Alarm cancelled for room number:" + roomNumber);
+            viewPanel.append("Alarm cancelled for room number:" + roomNumber + "\n");
         } else {
-            viewPanel.setText("No alarm exists for that room number.");
+            viewPanel.append("No alarm exists for that room number.\n");
         }
     }
 
