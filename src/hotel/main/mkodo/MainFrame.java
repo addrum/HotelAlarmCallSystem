@@ -29,10 +29,13 @@ public class MainFrame extends javax.swing.JFrame {
         viewPanel = new javax.swing.JTextArea();
         jScrollPane2 = new javax.swing.JScrollPane();
         roomNumberTextArea = new javax.swing.JTextArea();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        timeTextArea = new javax.swing.JTextArea();
         timeLabel = new javax.swing.JLabel();
         roomNumberLabel = new javax.swing.JLabel();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        hoursTextArea = new javax.swing.JTextArea();
+        timeLabel1 = new javax.swing.JLabel();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        minutesTextArea = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -66,21 +69,31 @@ public class MainFrame extends javax.swing.JFrame {
         viewPanel.setColumns(20);
         viewPanel.setLineWrap(true);
         viewPanel.setRows(5);
-        viewPanel.setAutoscrolls(false);
         viewPanel.setRequestFocusEnabled(false);
         jScrollPane1.setViewportView(viewPanel);
 
         roomNumberTextArea.setColumns(20);
         roomNumberTextArea.setRows(5);
         jScrollPane2.setViewportView(roomNumberTextArea);
+        minutesTextArea.setLineWrap(true);
 
-        timeTextArea.setColumns(20);
-        timeTextArea.setRows(5);
-        jScrollPane3.setViewportView(timeTextArea);
-
-        timeLabel.setText("Time:");
+        timeLabel.setText("Hours:");
 
         roomNumberLabel.setText("Room Number:");
+
+        hoursTextArea.setColumns(20);
+        hoursTextArea.setRows(1);
+        hoursTextArea.setWrapStyleWord(true);
+        jScrollPane4.setViewportView(hoursTextArea);
+        hoursTextArea.setLineWrap(true);
+
+        timeLabel1.setText("Minutes:");
+
+        minutesTextArea.setColumns(20);
+        minutesTextArea.setRows(5);
+        minutesTextArea.setWrapStyleWord(true);
+        jScrollPane5.setViewportView(minutesTextArea);
+        minutesTextArea.setLineWrap(true);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -89,29 +102,30 @@ public class MainFrame extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane1)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(cancelAlarmButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(setAlarmButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(nextAlarmCallButton))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(cancelAlarmButton)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(setAlarmButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(nextAlarmCallButton))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(roomNumberLabel)
-                                        .addGap(101, 101, 101)))
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(timeLabel)
-                                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(4, 4, 4)))))
-                .addContainerGap())
+                                .addGap(6, 6, 6)
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 268, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(roomNumberLabel)
+                                .addGap(101, 101, 101)))
+                        .addGap(4, 4, 4)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(timeLabel)
+                            .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(timeLabel1))))
+                .addGap(10, 10, 10))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -123,15 +137,17 @@ public class MainFrame extends javax.swing.JFrame {
                         .addComponent(nextAlarmCallButton)
                         .addComponent(setAlarmButton)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 74, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 65, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(timeLabel)
-                    .addComponent(roomNumberLabel))
+                    .addComponent(roomNumberLabel)
+                    .addComponent(timeLabel1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane2)
-                    .addComponent(jScrollPane3))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE)
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -141,15 +157,20 @@ public class MainFrame extends javax.swing.JFrame {
     private void setAlarmButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_setAlarmButtonActionPerformed
         if (roomNumberTextArea.getText().equals("")) {
             viewPanel.append("Please enter a room number.\n");
-        } else if (timeTextArea.getText().equals("")) {
+        } else if (hoursTextArea.getText().equals("") || minutesTextArea.getText().equals("")) {
             viewPanel.append("Please enter an alarm time.\n");
         } else {
-            int roomNumber = Integer.parseInt(roomNumberTextArea.getText());
-            String time = timeTextArea.getText();
-            hotelSystem.setAlarmTime(roomNumber, time);
-            viewPanel.append("Alarm set for room number: " + roomNumber + " at: " + time + "\n");
-            timeTextArea.setText("");
-            roomNumberTextArea.setText("");
+            if (Integer.parseInt(minutesTextArea.getText()) % 5 == 0) {
+                int roomNumber = Integer.parseInt(roomNumberTextArea.getText());
+                String time = hoursTextArea.getText() + ":" + minutesTextArea.getText() + ":00";
+                hotelSystem.setAlarmTime(roomNumber, time);
+                viewPanel.append("Alarm set for room number: " + roomNumber + " at: " + time + "\n");
+                hoursTextArea.setText("");
+                minutesTextArea.setText("");
+                roomNumberTextArea.setText("");
+            } else {
+                viewPanel.append("Please ensure you enter minutes as a multiple of 5.\n");
+            }
         }
     }//GEN-LAST:event_setAlarmButtonActionPerformed
 
@@ -158,7 +179,7 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_nextAlarmCallButtonMouseClicked
 
     private void nextAlarmCallButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nextAlarmCallButtonActionPerformed
-        viewPanel.append(hotelSystem.getNextCallRequest()+"\n");
+        viewPanel.append(hotelSystem.getNextCallRequest() + "\n");
     }//GEN-LAST:event_nextAlarmCallButtonActionPerformed
 
     private void cancelAlarmButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelAlarmButtonActionPerformed
@@ -207,15 +228,18 @@ public class MainFrame extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton cancelAlarmButton;
+    private javax.swing.JTextArea hoursTextArea;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane5;
+    private javax.swing.JTextArea minutesTextArea;
     private javax.swing.JButton nextAlarmCallButton;
     private javax.swing.JLabel roomNumberLabel;
     private javax.swing.JTextArea roomNumberTextArea;
     private javax.swing.JButton setAlarmButton;
     private javax.swing.JLabel timeLabel;
-    private javax.swing.JTextArea timeTextArea;
+    private javax.swing.JLabel timeLabel1;
     private javax.swing.JTextArea viewPanel;
     // End of variables declaration//GEN-END:variables
 }

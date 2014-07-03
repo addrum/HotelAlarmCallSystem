@@ -2,6 +2,7 @@ package hotel.main.mkodo;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -17,17 +18,19 @@ import javax.swing.JTextArea;
 
 public class HotelSystem extends Thread {
 
-    private HashMap<Integer, String> callLog;
-    private SimpleDateFormat timeFormat = new SimpleDateFormat("kk:mm:ss");
+    private final JTextArea viewPanel;
     private final String wakeUpMessage = "This is your automatic wake up call for room number: ";
+    private final HashMap<Integer, String> callLog;
+    private final SimpleDateFormat timeFormat = new SimpleDateFormat("kk:mm:ss");
+    private final ArrayList tempNumbers;
     private String nextCall;
     private Thread thread;
     private String currentTime;
-    private JTextArea viewPanel;
 
     public HotelSystem(JTextArea viewPanel) {
         this.viewPanel = viewPanel;
         callLog = new LinkedHashMap<Integer, String>();
+        tempNumbers = new ArrayList();
     }
 
     @Override
@@ -35,10 +38,9 @@ public class HotelSystem extends Thread {
         while (true) {
             currentTime = getCurrentTime();
             if (callLog.containsValue(currentTime)) {
-                StringBuilder numbers = new StringBuilder();
                 for (Entry<Integer, String> entry : callLog.entrySet()) {
                     if (entry.getValue().equals(currentTime)) {
-                        System.out.println(entry.getKey());
+                        tempNumbers.add(entry.getKey());
                         sendAlarmCall(entry.getKey());
                     }
                 }
@@ -61,8 +63,9 @@ public class HotelSystem extends Thread {
     }
 
     // sends a generic alarm call message followed by the room number
-    private void sendAlarmCall(int numbers) {
-        viewPanel.append(wakeUpMessage + numbers + "\n");
+    private void sendAlarmCall(int roomNumber) {
+        viewPanel.append(wakeUpMessage + roomNumber + "\n");
+        //callLog.remove(roomNumber);
     }
 
     // uses the iterator to get to first key:value pair in the hashmap
